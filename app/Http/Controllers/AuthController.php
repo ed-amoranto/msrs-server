@@ -13,10 +13,12 @@ class AuthController extends Controller
 {
     use HttpResponses;
 
-    public function login(LoginUserRequest $request){
+    public function login(LoginUserRequest $request)
+    {
         $request->validated($request->all());
 
-        if(!Auth::attempt($request->only('employee_id', 'password'))){
+        if(!Auth::attempt($request->only('employee_id', 'password')))
+        {
             return $this->error('', 'Credentials do not match', 401);
         }
 
@@ -28,7 +30,8 @@ class AuthController extends Controller
         ], 'Login Successfully');
     }
 
-    public function register(StoreUserRequest $request){
+    public function register(StoreUserRequest $request)
+    {
         $request->validated($request->all());
         $user = User::create([
             'employee_id' => $request->employee_id,
@@ -40,11 +43,13 @@ class AuthController extends Controller
 
         return $this->success([
             'user' => $user,
-            'token' => $user->createToken('API Token of ' . $request->employee_id)->plainTextToken,
         ], 'Registered Successfully');
     }
 
-    public function logout(){
-        return response()->json('This is my logout Method');
+    public function logout()
+    {
+        Auth::user()->currentAccessToken()->delete();
+
+        return $this->success([], 'Logged out Successfully');
     }
 }
