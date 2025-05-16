@@ -32,7 +32,7 @@ class AuthController extends Controller
 
     public function register(StoreUserRequest $request)
     {
-        $request->validated($request->all());
+        $request->validated();
         $user = User::create([
             'employee_id' => $request->employee_id,
             'last_name' => $request->last_name,

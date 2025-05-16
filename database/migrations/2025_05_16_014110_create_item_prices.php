@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('customer_name', 100);
             $table->string('customer_code', 10);
             $table->string('item_description', 200);
+            $table->integer('min_order_qty');
             $table->double('unit_price');
             $table->string('currency', 3);
             $table->integer('rev_no');
